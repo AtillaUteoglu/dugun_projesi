@@ -1,39 +1,61 @@
+# --- TEMEL AYARLAR ---
 import os
 from pathlib import Path
 
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 BASE_DIR = Path(__file__).resolve().parent.parent
-# Sonra aşağıya inip DATABASES kısmının şuna benzediğinden emin olun:
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-# settings.py dosyasının en altına yapıştır
 
+SECRET_KEY = 'django-insecure-test-key-123'
+DEBUG = False # Yayında olduğumuz için False olmalı
+ALLOWED_HOSTS = ['*'] # Render linkini buraya ekleyebilirsin
+
+ROOT_URLCONF = 'dugun_projesi.urls'
+
+# --- STATİK VE MEDYA AYARLARI ---
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'dugun_app' / 'static']
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# --- STORAGE AYARLARI (Modern Yöntem) ---
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+# --- CLOUDINARY AYARLARI ---
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'bhgfroil',
     'API_KEY': '658135333859996',
     'API_SECRET': 'LUYhWBaxDSk8kJDC-VBYe5LNIUI',
 }
 
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-    },
+# --- VERİTABANI AYARLARI ---
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
-SECRET_KEY = 'django-insecure-test-key-123'
-DEBUG = True
-ALLOWED_HOSTS = ['*']
-# Uygulamalar (Burayı değiştirme)
+
+# --- MIDDLEWARE (WhiteNoise en üstlerde olmalı) ---
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Statik dosyaları sunar
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+# --- DİĞERLERİ ---
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,21 +63,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'dugun_app',
 ]
-
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-ROOT_URLCONF = 'dugun_projesi.urls'
 
 TEMPLATES = [
     {
@@ -73,25 +84,4 @@ TEMPLATES = [
     },
 ]
 
-# Statik ve Medya Ayarları
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'dugun_app' / 'static']
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-# Varsayılan birincil anahtar tipi
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Statik dosyaların (CSS, JS, Resimler) konumu
-STATIC_URL = 'static/'
-
-# Django'nun statik dosyaları nerede arayacağını belirtiyoruz
-STATICFILES_DIRS = [
-    BASE_DIR / 'dugun_app' / 'static',
-]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
