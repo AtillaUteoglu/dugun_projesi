@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İsa & Simge Anıları</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<div class="main-container">
+        <div class="hero-section">
+            <img src="{% static 'images/isa-simge2.jpg' %}" alt="İsa & Simge">
+            <div class="hero-text">
+                <h2>İsa & Simge</h2>
+                <p>Düğün Anıları</p>
+            </div>
+        </div>
+
+        <a href="{% url 'galeri' %}" class="upload-btn">
+            Galeri <span class="arrow">></span>
+        </a>
+
+       <form method="post" enctype="multipart/form-data" class="upload-form">
+    {% csrf_token %}
+    
+    <div class="input-group">
+        <label>Adınız Soyadınız:</label>
+        {{ form.isim_soyisim }}
+    </div>
+    
+    <div class="input-group">
+        <label>Mesajınız:</label>
+        {{ form.mesaj }}
+    </div>
+
+    <label for="id_dosya" class="drop-zone" id="drop-zone">
+        <span id="file-text">Fotoğraf Seç</span>
+    </label>
+    
+    <input type="file" name="dosya" id="id_dosya" multiple accept="image/*" style="display:none;">
+
+    <button type="submit" class="submit-btn">Gönder</button>
+</form>
+</div>
+
+    <script>
+        // Dosya seçildiğinde kutu içindeki yazıyı değiştirir
+        const fileInput = document.getElementById('id_dosya');
+        const fileText = document.getElementById('file-text');
+        fileInput.addEventListener('change', function() {
+            if(this.files.length > 0) fileText.textContent = "Seçilen: " + this.files[0].name;
+        });
+    </script>
+</body>
+<footer style="text-align: center; padding: 20px; font-size: 14px; color: #555;">
+    <p>© 2026 Tüm hakları saklıdır.</p>
+    <p>Powered by <strong>Atilla Ütenoğlu</strong></p>
+</footer>
+</html>

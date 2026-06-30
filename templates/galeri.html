@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Düğün Galerisi</title>
+    <link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+    <style>
+/* Galeri kutularını yan yana 2'li düzenle */
+.gallery-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Yan yana 2 eşit sütun */
+    gap: 15px; /* Kutular arası boşluk */
+    padding: 10px;
+}
+
+/* Albüm kapak fotoğrafı stili */
+.album-cover img {
+    width: 100%;
+    height: 180px; /* Sabit yükseklik */
+    object-fit: cover;
+    border-radius: 12px;
+}
+</style>
+</head>
+<body>
+
+<div class="main-container">
+         <div class="hero-section">
+            <img src="{% static 'images/isa-simge2.jpg' %}" alt="İsa & Simge">
+            <div class="hero-text">
+                <h2>İsa & Simge</h2>
+                <p>Düğün Anıları</p>
+            </div>
+        </div>
+    
+    <a href="{% url 'yukle' %}" class="upload-btn">
+        + Anı Ekle
+    </a>
+{% regroup anilar by isim_soyisim as ani_listesi %}
+
+    <div class="gallery-container">
+        {% for grup in ani_listesi %}
+            {% with ilk_foto=grup.list.0 %}
+                <div class="memory-card album-cover" onclick="openModal('modal-{{ grup.grouper|slugify }}')">
+                    <img src="{{ ilk_foto.dosya.url }}" alt="{{ grup.grouper }}">
+                    <div class="card-info">
+                        <div class="name">{{ grup.grouper }}</div>
+                        <div class="count">{{ grup.list|length }} Fotoğraf</div>
+                    </div>
+                </div>
+            {% endwith %}
+
+            <div id="modal-{{ grup.grouper|slugify }}" class="modal" style="display:none;">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('modal-{{ grup.grouper|slugify }}')">&times;</span>
+                    <h3>{{ grup.grouper }}</h3>
+                   <div class="modal-gallery">
+                      {% for ani in grup.list %}
+                     <img src="{{ ani.dosya.url }}" alt="Anı" onclick="enlarge(this.src)">
+                       {% endfor %}
+                         </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+<script>
+function openModal(id) { document.getElementById(id).style.display = "block"; }
+function closeModal(id) { document.getElementById(id).style.display = "none"; }
+
+// Resme tıklayınca büyüt
+function enlarge(src) {
+    document.getElementById('full-view').style.display = 'block';
+    document.getElementById('full-img').src = src;
+}
+// Kapat
+function closeFull() { document.getElementById('full-view').style.display = 'none'; }
+</script>
+
+<style>
+/* Mevcut CSS'ine ekle */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); overflow-y: auto; }
+.modal-content { background: #111; margin: 2% auto; padding: 20px; width: 90%; max-width: 800px; border-radius: 10px; position: relative; }
+.modal-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+.modal-gallery img { width: 100%;
+    height: auto; /* Yüksekliği otomatik bırak ki resim yayılmasın/sıkışmasın */
+    object-fit: contain; /* Resmi asla kırpmaz, tamamını orijinal oranında gösterir */
+    background-color: transparent;}
+.modal-gallery img:hover { transform: scale(1.05); }
+.close { position: absolute; right: 20px; top: 10px; color: white; font-size: 40px; cursor: pointer; }
+
+/* Büyütülmüş resim için */
+#full-view { display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background: black; text-align: center; }
+#full-view img { max-width: 90%; max-height: 80%; margin-top: 50px; }
+</style>
+
+<div id="full-view" onclick="closeFull()">
+    <img id="full-img" src="">
+    <p style="color:white;">Kapatmak için resme tıkla</p>
+</div>
+</body>
+<footer style="text-align: center; padding: 20px; font-size: 14px; color: #555;">
+    <p>© 2026 Tüm hakları saklıdır.</p>
+    <p>Powered by <strong>Atilla Ütenoğlu</strong></p>
+</footer>
+</html>

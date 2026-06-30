@@ -1,0 +1,88 @@
+body { background-color: #f7f7f7; font-family: sans-serif; }
+.main-container { max-width: 400px; margin: 20px auto; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+
+/* Üst Fotoğraf */
+/* Fotoğraf alanı için sabit bir yükseklik belirle */
+/* Üst Fotoğraf (Dikey 718x940 uyumlu) */
+.hero-section {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    height: 380px; 
+    width: 100%;
+}
+
+.hero-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; /* Fotoğrafı ortalar */
+    display: block;
+}
+
+/* Fotoğraf üzerindeki yazı */
+.hero-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); /* Yazının okunması için karartma */
+    color: white;
+    text-align: center;
+}
+
+.hero-text h2 {
+    font-size: 28px;
+    margin: 0;
+    font-family: 'Georgia', serif;
+}
+
+.hero-text p {
+    font-size: 16px;
+    margin: 5px 0 0 0;
+    opacity: 0.9;
+}
+
+/* Kesikli Çizgili Kutu */
+.drop-zone { 
+    display: block; width: 100%; padding: 30px 0; 
+    border: 2px dashed #ccc; border-radius: 10px; 
+    text-align: center; color: #777; cursor: pointer; margin-bottom: 15px;
+}
+
+/* İnput ve Butonlar */
+.input-group { margin-bottom: 15px; }
+.input-group input, .input-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+.submit-btn { width: 100%; padding: 15px; background: #c5a059; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+/* Galeri */
+.gallery-title { margin: 20px 0; font-size: 14px; color: #555; }
+.gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.gallery-item img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; }
+
+.upload-btn {
+    display: block;        /* Butonu bir blok elemanı yapar */
+    width: fit-content;    /* Genişliğini içeriğine göre ayarlar */
+    margin: 20px auto;     /* Üstten 20px boşluk bırakır, sağdan ve soldan otomatik ortalar */
+    background-color: #c5a059;
+    color: white;
+    padding: 14px 40px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    /* Diğer özelliklerin aynı kalabilir */
+}
+
+/* Butonun üzerine gelince (Hover) */
+.upload-btn:hover {
+    background-color: #a8874a; /* Biraz daha koyu bir ton */
+    transform: translateY(-3px); /* Hafif yukarı kalkar */
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.5);
+}
+
+/* Butonun tıklanma efekti */
+.upload-btn:active {
+    transform: translateY(0);
+}
