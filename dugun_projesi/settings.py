@@ -1,12 +1,13 @@
 import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# VERİTABANI AYARLARI (Bu kısım eksik olduğu için hata alıyordun)
+BASE_DIR = Path(__file__).resolve().parent.parent
+# Sonra aşağıya inip DATABASES kısmının şuna benzediğinden emin olun:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
