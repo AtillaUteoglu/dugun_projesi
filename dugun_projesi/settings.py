@@ -16,12 +16,12 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'dugun_app' / 'static']
 
 # --- ESKİ HALİ ---
-MEDIA_URL = '/media/'
 # MEDIA_ROOT = BASE_DIR / 'media'
 
 # --- YENİ HALİ (Bunu kullan) ---
 MEDIA_URL = 'https://res.cloudinary.com/bhgfroil/'
-# settings.py içindeki STORAGES bloğunu bununla değiştir
+
+# STORAGES ayarın modern standarttır, bunu kullan:
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
@@ -30,7 +30,6 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-
 # --- CLOUDINARY AYARLARI ---
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'bhgfroil',
