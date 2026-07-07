@@ -13,7 +13,7 @@ ROOT_URLCONF = 'dugun_projesi.urls'
 
 # --- STATİK VE MEDYA AYARLARI ---
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [BASE_DIR / 'dugun_app' / 'static']
 
 # --- ESKİ HALİ ---
@@ -24,14 +24,8 @@ MEDIA_URL = '/'
 # STORAGES ayarın modern standarttır, bunu kullan:
 MEDIA_URL = 'https://res.cloudinary.com/bhgfroil/'
 
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # --- CLOUDINARY AYARLARI ---
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'bhgfroil',
@@ -60,6 +54,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
