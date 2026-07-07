@@ -15,8 +15,12 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'dugun_app' / 'static']
 
+# --- ESKİ HALİ ---
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_ROOT = BASE_DIR / 'media'
+
+# --- YENİ HALİ (Bunu kullan) ---
+MEDIA_URL = 'https://res.cloudinary.com/bhgfroil/'
 
 # --- STORAGE AYARLARI (Modern Yöntem) ---
 STORAGES = {
