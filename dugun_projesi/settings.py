@@ -23,6 +23,8 @@ MEDIA_URL = '/'
 MEDIA_URL = 'https://res.cloudinary.com/bhgfroil/'
 
 # STORAGES ayarın modern standarttır, bunu kullan:
+MEDIA_URL = 'https://res.cloudinary.com/bhgfroil/'
+
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
