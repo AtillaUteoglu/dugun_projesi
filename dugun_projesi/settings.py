@@ -13,10 +13,13 @@ ROOT_URLCONF = 'dugun_projesi.urls'
 # --- STATİK AYARLAR ---
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [] 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # --- MEDYA VE CLOUDINARY ---
 # Cloudinary'nin media'ları yönetebilmesi için bu şart:
+MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # CSS dosyaları için Whitenoise yapılandırması
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
