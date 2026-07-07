@@ -17,7 +17,8 @@ STATICFILES_DIRS = [BASE_DIR / 'dugun_app' / 'static']
 
 # --- ESKİ HALİ ---
 # MEDIA_ROOT = BASE_DIR / 'media'
-
+# settings.py dosyasında:
+MEDIA_URL = '/'
 # --- YENİ HALİ (Bunu kullan) ---
 MEDIA_URL = 'https://res.cloudinary.com/bhgfroil/'
 
@@ -87,3 +88,4 @@ TEMPLATES = [
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CLOUDINARY_URL = 'cloudinary://658135333859996:LUYhWBaxDSk8kJDC-VBYe5LNIUI@bhgfroil'

@@ -44,7 +44,7 @@
         {% for grup in ani_listesi %}
             {% with ilk_foto=grup.list.0 %}
                 <div class="memory-card album-cover" onclick="openModal('modal-{{ grup.grouper|slugify }}')">
-                    <img src="{{ ilk_foto.dosya.url }}" alt="{{ grup.grouper }}">
+                    <img src="{{ ilk_foto.dosya.url }}" alt="{{ grup.grouper }}" onerror="this.src='https://via.placeholder.com/180';">
                     <div class="card-info">
                         <div class="name">{{ grup.grouper }}</div>
                         <div class="count">{{ grup.list|length }} Fotoğraf</div>
@@ -58,7 +58,7 @@
                     <h3>{{ grup.grouper }}</h3>
                    <div class="modal-gallery">
                       {% for ani in grup.list %}
-                     <img src="{{ ani.dosya.url }}" alt="Anı" onclick="enlarge(this.src)">
+                     <img src="{{ ani.dosya.url }}" alt="Anı" onclick="enlarge(this.src)" onerror="this.src='https://via.placeholder.com/200';">
                        {% endfor %}
                          </div>
                 </div>
