@@ -1,22 +1,32 @@
 import os
 from pathlib import Path
 
+# Proje kök dizini
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY = 'django-insecure-test-key-123'  # NOT: Canlıda bunu Render'da environment variable olarak tanımlaman daha güvenli olur
 DEBUG = False
 ALLOWED_HOSTS = ['*']
 
-# Statik ve Medya
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [] 
+ROOT_URLCONF = 'dugun_projesi.urls'
 
-# WhiteNoise'u devre dışı bırakıyoruz (Sistemi açabilmek için)
-# STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage' 
+# --- UYGULAMALAR ---
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
+    'dugun_app',
+]
 
-# Middleware'den de WhiteNoise'u geçici olarak kaldır
+# --- MIDDLEWARE ---
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Statik dosyalar icin SecurityMiddleware'den hemen sonra olmali
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -24,3 +34,57 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# --- STATİK DOSYALAR (CSS, JS, resimler) ---
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# --- MEDYA (kullanıcı yüklemeleri - Cloudinary) ---
+MEDIA_URL = '/media/'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'bhgfroil',
+    'API_KEY': '658135333859996',
+    'API_SECRET': 'LUYhWBaxDSk8kJDC-VBYe5LNIUI',
+}
+
+# Django 5 icin modern storage tanimi: statik -> whitenoise, medya -> cloudinary
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+# --- GÜVENLİK VE PROXY (Render HTTPS icin) ---
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
