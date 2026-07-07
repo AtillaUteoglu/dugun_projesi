@@ -21,6 +21,7 @@ MEDIA_URL = '/media/'
 
 # --- YENİ HALİ (Bunu kullan) ---
 MEDIA_URL = 'https://res.cloudinary.com/bhgfroil/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # --- STORAGE AYARLARI (Modern Yöntem) ---
 STORAGES = {
