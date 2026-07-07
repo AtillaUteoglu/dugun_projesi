@@ -1,6 +1,7 @@
 # --- TEMEL AYARLAR ---
 import os
 from pathlib import Path
+import cloudinary
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -19,9 +20,7 @@ STATICFILES_DIRS = [BASE_DIR / 'dugun_app' / 'static']
 # MEDIA_ROOT = BASE_DIR / 'media'
 # settings.py dosyasında:
 MEDIA_URL = '/'
-# --- YENİ HALİ (Bunu kullan) ---
-MEDIA_URL = 'https://res.cloudinary.com/bhgfroil/'
-
+# --- YENİ HALİ (Bunu kullan) --
 # STORAGES ayarın modern standarttır, bunu kullan:
 MEDIA_URL = 'https://res.cloudinary.com/bhgfroil/'
 
@@ -39,7 +38,11 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '658135333859996',
     'API_SECRET': 'LUYhWBaxDSk8kJDC-VBYe5LNIUI',
 }
-
+cloudinary.config( 
+  cloud_name = 'bhgfroil', 
+  api_key = 'KENDI_API_KEY_BURAYA', 
+  api_secret = 'KENDI_API_SECRET_BURAYA' 
+)
 # --- VERİTABANI AYARLARI ---
 DATABASES = {
     'default': {
@@ -67,8 +70,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'cloudinary_storage',
+    'django.contrib.staticfiles',
     'cloudinary',
     'dugun_app',
 ]
