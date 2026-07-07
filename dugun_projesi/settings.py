@@ -14,7 +14,14 @@ ROOT_URLCONF = 'dugun_projesi.urls'
 # --- STATİK VE MEDYA AYARLARI ---
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [BASE_DIR / 'dugun_app' / 'static']
+
+# Eğer STATICFILES_DIRS kullanıyorsan onu kaldırabilirsin, 
+# çünkü artık dosyalar uygulamanın kendi içinde (App-level).
+# Django, 'INSTALLED_APPS' içinde 'dugun_app' olduğu sürece 
+# 'dugun_app/static' klasörünü otomatik tanır.
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # --- ESKİ HALİ ---
 # MEDIA_ROOT = BASE_DIR / 'media'
