@@ -103,11 +103,3 @@ STORAGES = {
 
 # --- GÜVENLİK VE PROXY (Render HTTPS icin) ---
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-
-# settings.py dosyasının en altına ekle
-# DİKKAT: Deploy olduktan sonra bu kodu SİL ve tekrar pushla!
-
-from django.contrib.auth.models import User
-if not User.objects.filter(username='admin').exists():
-    User.objects.create_superuser('admin', 'admin@example.com', '12345678')
